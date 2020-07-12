@@ -1,12 +1,15 @@
 
-protocol PrinterProtocol {
-    var printerID:String { get }
-    func printOut(text:String)
-}
-
-struct Printer:PrinterProtocol {
+class Printer {
     let printerID:String
-    func printOut(text: String) {
+    var text: String = ""
+    init(printerID: String){
+        self.printerID = printerID
+    }
+    func typeIn(text:String){
+        self.text += text
+    }
+    func printOut() {
         print("Printer-\(printerID)--\(text)")
     }
+
 }

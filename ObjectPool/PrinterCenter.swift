@@ -1,22 +1,25 @@
 import Foundation
 
 class PrinterCenter {
-    private let pool: Pool<PrinterProtocol>;
-    static let shared = PrinterCenter(machineAmount:5);
+    typealias CenterMachine = Printer
+    private let pool: Pool<CenterMachine>
+    static let shared = PrinterCenter(machineAmount:5)
     private init(machineAmount:Int) {
-        var printers: [PrinterProtocol] = []
+        var printers: [CenterMachine] = []
         for count in 1 ... machineAmount {
-            printers.append(Printer(printerID: "Machine-\(count)"))
+            printers.append(CenterMachine(printerID: "Machine-\(count)"))
         }
-        pool = Pool<PrinterProtocol>(items:printers);
+        pool = Pool<CenterMachine>(items: printers, objectRester: { item in
+            item.text = ""
+        })
     }
-    func checkoutPrinter() -> PrinterProtocol? {
-        let book = pool.getFromPool();
-        return book;
+    func checkoutPrinter() -> CenterMachine? {
+        let book = pool.getFromPool()
+        return book
     }
     
-    func returnPrinter(printer:PrinterProtocol) {
-        pool.returnToPool(item: printer);
+    func returnPrinter(CenterMachine:CenterMachine) {
+        pool.returnToPool(item: CenterMachine)
     }
     
 }
